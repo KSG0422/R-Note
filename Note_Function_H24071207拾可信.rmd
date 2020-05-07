@@ -1,0 +1,187 @@
+---
+title: "Note_Function_H24071207拾可信"
+author: "H24071207拾可信"
+date: "2020/5/4"
+output: html_document
+---
+
+# 1.Source
+## 1.finish the code 
+## 2.save as XXX.R, use source to run the code
+## 3.use print or cat to output the final results
+```{}
+*print => 顯示的字元會用引號隔開
+*cat => 顯示的字元不用引號，可用"\n"將字元換行
+```
+
+```{r}
+x <- c("A", "B", "C", "D")
+print(x)
+cat(x)
+#用"\n"將字元換行
+cat(x[1], "\n",
+    x[2], "\n", sep = "" )
+#找出完美數(使用print)
+k <- 1
+while(k < 100){
+  fac <- c()
+  for(j in 1:k){
+    if((k %% j) == 0) fac <- c(fac, j)
+  }
+    if(k == sum(fac[-length(fac)])){
+      out <- paste(paste(k, "=", sep=" "),
+             paste(fac[-length(fac)], collapse = " + "),
+             sep = " ")
+      print(out)
+  }
+  k <- k+1
+}
+#找出完美數(使用cat)
+k <- 1
+while(k < 100){
+  fac <- c()
+  for(j in 1:k){
+    if((k %% j) == 0) fac <- c(fac, j)
+  }
+    if(k == sum(fac[-length(fac)])){
+      cat(paste(k, "=", sep=" "),
+          paste(fac[-length(fac)], collapse = " + "), "\n")
+  }
+  k <- k+1
+}
+```
+
+# 2.function(an input)
+```{r}
+f <- function(x){
+  3*x + 2
+}
+f(2); f(3); f(4)
+#舉例
+make.percent <- function(x){
+  x.percent <- round(100*x, digits = 1)
+  x.show <- paste(x.percent, "%", sep = "")
+  cat(x.show)
+}
+make.percent(c(0.8933, 0.2344, 0.0764, 0.7736))
+ans <- make.percent(c(0.8933, 0.2344, 0.0764, 0.7736))
+ans 
+#輸出為NULL，因為函數值未貼到到ans這個變數
+```
+## Return
+### return the parameter to the fuction after calculation
+```{r}
+f <- function(x){
+  return(3*x + 2)
+}
+f(2)
+f <- function(x){
+  res <- 3*x + 2
+}
+f(2)
+#因為函數算出來的值沒有回傳到函式，所以f(2)未輸出任何結果
+#舉例(使用return)
+make.percent <- function(x){
+  x.percent <- round(100*x, digits = 1)
+  x.show <- paste(x.percent, "%", sep = "")
+  return(x.show)
+}
+make.percent(c(0.8933, 0.2344, 0.0764, 0.7736))
+ans <- make.percent(c(0.8933, 0.2344, 0.0764, 0.7736))
+ans
+#舉例(使用invisible)
+make.percent <- function(x){
+x.percent <- round(100*x, digits = 1)
+x.show <- paste(x.percent, "%", sep = "")
+invisible(x.show)
+}
+make.percent(c(0.8933, 0.2344, 0.0764, 0.7736))
+#使用invisible不會直接顯示計算結果，需要再命名一個新的變數來輸出結果
+ans <- make.percent(c(0.8933, 0.2344, 0.0764, 0.7736))
+ans
+```
+## Fuction name
+### View as an object
+```{r}
+objA <- function(x){
+  return(2*x)
+}
+objA #輸出為一個函數
+objA <- objA(4)
+objA #輸出為一個向量
+```
+# 3.function(multiple input)
+```{r}
+f <- function(x, y){
+  x^2 + y^2
+}
+f(2, 2); f(2, 3); f(2, 4)
+#舉例
+make.percent <- function(x, x.digits){
+  x.percent <- round(100*x, digits = x.digits)
+  x.show <- paste(x.percent, "%", sep = "")
+  return(x.show)
+}
+make.percent(c(0.8933, 0.2344, 0.0764, 0.7736), 0)
+make.percent(c(0.8933, 0.2344, 0.0764, 0.7736), 1)
+make.percent(c(0.8933, 0.2344, 0.0764, 0.7736), 2)
+#參數設定一個預設值
+make.percent <- function(x, x.digits = 0){
+  x.percent <- round(100*x, digits = x.digits)
+  x.show <- paste(x.percent, "%", sep = "")
+  return(x.show)
+}
+make.percent(c(0.8933, 0.2344, 0.0764, 0.7736))
+make.percent(c(0.8933, 0.2344, 0.0764, 0.7736), 0)
+```
+# 4.use function or return to output multiple results
+## list：a vector that can save different type of elements
+```{r}
+X <- list(a = 3, b = c(1,2,3,4,5), c = c("A", "B"))
+X
+```
+### use $ or [[ ]] to extract the elements in list
+$：element name 
+[[ ]]：element name or position
+```{r}
+X <- list(a = 3, b = c(1,2,3,4,5), c = c("A", "B"))
+X$a
+X[[2]]
+X[["c"]]
+```
+build a list
+```{r}
+create <- list()
+length(create)
+length(create) <- 2
+create[[1]] <- seq(1,5,2)
+create
+create$plus <- seq(1,5,2)+3 #新命名的物件會放在list的最後面
+create
+create[[2]]
+create[[3]]
+names(create)
+length(create)        #list的長度因為新增一個名為plus的物件所以+1
+#舉例
+perfect.number <- function(a, b){
+  k <- a
+  res <- c()
+  ans <- list()
+  while(k < b){
+    fac <- c()
+    for(j in 1:k){
+      if((k %% j) == 0) fac <- c(fac, j)
+    }
+      if(k == sum(fac[-length(fac)])) {
+      res <- c(res, k)
+      ans[[paste(k)]] <- fac[-length(fac)]
+    }
+      k <- k+1
+  }
+  ans$number <- res
+  return(ans)
+}
+Ans <- perfect.number(1, 100)
+Ans
+Ans[["28"]]
+```

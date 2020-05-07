@@ -1,0 +1,98 @@
+---
+title: "Note_Apply_H24071207拾可信"
+author: "H24071207拾可信"
+date: "2020/5/5"
+output: html_document
+---
+
+# 1.Apply
+## Use function in sipecific data x，By using margin to assign function process by column or row
+```{}
+句法：apply(x,margin,function...)
+x：矩陣或資料框
+margin：以矩陣為例，1代表矩陣的列，2代表矩陣的行
+function：想執行的函數
+```
+
+```{r}
+A <- matrix(rnorm(100), 10, 10)
+apply(A, 1, sum)
+rowSums(A)
+apply(A, 2, sum)
+colSums(A)
+#計算列的總和
+row.col.sum <- function(X, margin = 1){
+  size <- dim(X)
+  if(margin == 1){
+    res <- c()
+    for(j in 1:size[1]){
+      res <- c(res, sum(X[j,]))
+    }
+  }else if(margin == 2){
+    res <- c()
+    for(j in 1:size[2]){
+      res <- c(res, sum(X[,j]))
+    }
+  }else{
+    stop("margin should be either 1 or 2.")
+  }
+  return(res)
+}
+#比較三種不同方法所花費的時間
+#install.packages("rbenchmark")
+library(rbenchmark)
+benchmark(replications=rep(1000, 1),
+          apply(A, 1, sum), rowSums(A), row.col.sum(A, 1),
+          columns=c('test', 'elapsed', 'relative'))
+#當資料有NA值時
+B <- matrix(sample(1:100, 15), 5, 3)
+B[1, 2] <- NA
+B[3, 1] <- NA
+B <- data.frame(B)
+colnames(B) <- c("factor 1", "factor 2", "factor 3")
+apply(B, 2, mean)
+#移除NA值
+apply(B, 2, mean, na.rm = TRUE)
+```
+# 2.lapply
+## similair to apply，use function to data x，though lapply can not process by specific row or column, x usually us one diamansion vector
+```{}
+句法：lapply(x,function,...)
+x：向量或資料框
+function：想執行的函數
+```
+
+```{r}
+C <- list(a = 1:10, beta = exp(-3:3))
+#如果在這邊用apply，會出現Error，因為dim(X)必須是正整數
+lapply(C, mean)
+#用lapply輸出圖表
+par(mfrow = c(1, 2))
+lapply(C, hist)
+```
+# 3.sapply
+## similair to lapply，use function to data x,difference  between lapply is that sapply will respond a vector, not a list
+## sapply will respond sequense and vector with same lengthen
+```{}
+句法：sapply(x,function,...,simplify=TRUE)
+x：向量、list或資料框
+function：想執行的函數
+simplify：將回傳的list簡單化(預設為TRUE)
+```
+
+```{r}
+sapply(C, summary)
+sapply(C, summary, simplify = FALSE)
+lapply(C, summary)
+```
+
+```{r}
+#資料為list，sapply回傳也會是list
+D <- list(a = sample(1:10, 10, replace = TRUE),
+b = sample(1:5, 20, replace = TRUE))
+sapply(D, unique)
+#和lapply比較
+lapply(D, unique)
+#sapply也能回傳table
+sapply(D, table)
+```

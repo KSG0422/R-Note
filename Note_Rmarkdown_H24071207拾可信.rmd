@@ -1,0 +1,93 @@
+---
+title: "Note_RMarkdown_H24071207拾可信"
+author: "H24071207拾可信"
+date: "2020/5/3"
+output: html_document
+---
+# 1.Basic edition
+```{}
+1.*word* _word_ :將字元斜體
+2.**word** and __word__ :將字元加粗
+3.word^2^ :字元加上上標
+4.~~word~~ :把符號中間的字元刪除
+## Ex
+### 1. _h24071126_ *h24071126*
+### 2. **h24071126** __h24071126__
+### 3. h24071126^2^
+### 4. ~~h24071126~~
+```
+### 1. _h24071126_ *h24071126*
+### 2. **h24071126** __h24071126__
+### 3. h24071126^2^
+### 4. ~~h24071126~~
+
+# 2. Header ---# :To mark the paragraphs
+```{}
+## Ex
+### h24071126
+#### h24071126
+##### h24071126
+```
+### h24071126
+#### h24071126
+##### h24071126
+
+# 3. $ 
+```{}
+## Ex
+### 1. $h24071126$ $A = \pi*r^{2}$
+*若為 $$ => 字元會改變樣式並顯示在正中間
+### 2. $$B = 2 \pi r$$
+```
+### 1. $h24071126$ $A = \pi*r^{2}$
+### 2. $$B = 2 \pi r$$
+
+# 4. Bullet Point
+```{}
+## Ex
+ 1. item1
+ 2. item2
+  + sub-item1
+```
+1. item1
+2. item2
+    + sub-item1
+    
+# 5.Form
+```{}
+Table Header  | Second Header
+------------- | -------------
+Table Cell    | Cell 2
+Cell 3        | Cell 4
+```
+Table Header  | Second Header
+------------- | -------------
+Table Cell    | Cell 2
+Cell 3        | Cell 4
+
+
+# 6.Matrix
+```{}
+$\left[
+    \begin{array}{cc}
+      A & B \\
+      C & D \\
+    \end{array}
+  \right]$
+```
+$\left[
+    \begin{array}{cc}
+      A & B \\
+      C & D \\
+    \end{array}
+  \right]$
+
+# 7.Chunk
+```{r}
+#用```{}開頭，```結尾
+```
+
+```{r}
+#用chunk製作圖表
+y <- 2 * 3 - 1
+hist(rnorm(100))

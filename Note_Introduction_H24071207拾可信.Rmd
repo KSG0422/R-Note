@@ -1,0 +1,316 @@
+---
+title: "Note_Introduction_H24071207拾可信"
+author: "H24071207拾可信"
+date: "2020/5/6"
+output: html_document
+---
+
+# 1.Introduction to Calculation
+### (a).Calculator
+```{r}
+5 + 3
+
+5 * 3
+
+5 / 3
+
+5 ^ 3
+
+5 %% 3
+
+5 %/% 3
+
+```
+
+### (b).Sequenece
+```{r}
+1:10
+
+seq(1, 10, 2)
+
+seq(1, 10, length.out = 6)
+```
+
+### (c).Basic features in R
+```{r}
+#Calculating with R
+#Named storage: assign a name to a value.
+
+a <- 3 ^ 5
+b = 3 ^ 5
+a
+
+b
+```
+
+### (d).Calculation by the set values
+```{r}
+a <- 1000
+b <- 4
+a * b - a
+```
+
+### (e).Special values in R
+```{r}
+NA
+
+NaN #ex: 0/0
+
+Inf #ex: 2/0
+
+-Inf #ex: -2/0
+
+pi
+
+1e-3
+```
+
+### (f).Name an objuect
+```{}
+#Avoid the following words:
+#break; else; FALSE; F; TRUE; F; for; function; if; Inf; NA; NaN; next;repeat; return; while;
+
+#Name a meaningful object by “.” or "_".
+#score1, score2 
+#score.John, score.Jack
+```
+
+### (g).More on calculation
+```{r}
+#Absolute value: |x|
+abs(-2)
+
+#Exponential & logarithm: exp(x), log(x)
+exp(10); log(2); log2(2); log(10); log10(10);
+
+
+```
+
+### (h).Other functions
+```{r}
+#“ˆ” or "**" means the degree of the power.
+2 ** 3; 2^3;2^0.5; sqrt(2);
+```
+
+### (i).Approximated values
+```{r}
+round(125.78253) 
+
+round(125.78253, digits = 3)
+#決定小是位數
+round(125.78253, digits = -2);
+
+round(83524587, digits = -3); round(83524587, digits = -5);
+
+signif(125.78253, digits = 2);
+#四捨五入
+signif(83524587, digits = 3); signif(83524587, digits = 5);
+
+
+floor(125.78253);
+#無條件捨去
+ceiling(125.78253);
+#無條件進位
+trunc(125.78253); 
+# extract the integer part
+```
+
+### (j).Descriptive statistics
+```{r}
+
+x <- 1:25
+mean(x)
+
+var(x)
+
+median(x)
+
+quantile(x, c(0.1, 0.5, 0.7))
+
+x <- c(1:25, NA)
+summary(x)
+```
+
+### (k).R is case-sensitive
+```{r}
+
+#If type MEAN()
+x <- c(1:25)
+#MEAN(x)
+## Error in MEAN(x): could not find function "MEAN"
+
+#Now, set:
+MEAN <- mean
+MEAN(x)
+```
+
+### (l).Objects in your workspace
+```{r}
+objects()
+
+ls()
+#If you want to delete some objects, you can type:
+rm(x, y)
+#Now, see again what you have in your workspace.
+objects()
+
+#You can see your objects on your topright corner also.
+```
+
+# 2.Introduction to Vectors
+### (a).Vectors
+```{r}
+vt1 <- c(2:4)
+vt2 <- c(3:6)
+vt2 <- c(vt2, vt1)
+vt2
+
+vt2 <- c(vt2, vt1)
+vt2
+```
+
+### (b).Some common functions to vectors
+```{r}
+length(vt1) 
+
+length(vt2)
+
+#Extracting elements from vectors, use [ ] to select the locations in thecvector.
+# ## Note that the count is different from C and python.
+
+vt1[3]
+
+vt2[c(3,5,7)]
+
+#We can select some elements of the vector as follows:
+
+vt1
+
+vt1[-2]
+
+vt2[-c(3:6)]
+```
+
+### (c).Vector arithmetic
+```{r}
+x <- c(3, 6, 9)
+x * 3
+
+x - 3
+
+x ^ 3
+
+y1 <- c(3, 2); y2 <- c(3, 2, 4);
+#longer object length is not a multiple of shorter object length
+
+x^y1
+
+x^y2
+
+#When the vectors are different lengths, the shorter one is extended by recycling.
+
+c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5,
+6, 6, 7, 7, 8, 8, 9, 9, 10, 10) %% 2:3
+
+#Recycling: rep(x, ntimes)
+
+c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5,
+6, 6, 7, 7, 8, 8, 9, 9, 10, 10) %% rep(2:3, 10)
+
+```
+
+### (d).Simple patterned vectors
+```{r}
+#Use “seq()” and “rep()” to construct a vector with similar patterns.
+
+rep(3, 12)
+
+rep(seq(2, 10, 2), 2)
+
+rep(c(1, 4), c(3, 2))
+
+rep(seq(2, 10, 2), rep(3, 5))
+```
+
+### (e).Assign values into a vector
+```{r}
+Xvector <- rep(NA, 6)
+Xvector[3] <- 12
+Xvector[c(4:6)] <- rep(1, 3)
+Xvector
+
+#To delete NA
+Xvector[-(1:2)]
+## [1] 12 1 1 1
+Xvector <- Xvector[-(1:2)]
+Xvector
+```
+
+# 3.Introduction to Matrix
+### (a).Construct a matrix by row
+```{r}
+a <- 1:5; b <- 6:10;
+c <- 11:15; d <- 16:20;
+
+M1 <- rbind(a, b, c, d)
+M1
+```
+
+### (b).Construct a matrix by column
+```{r}
+M2 <- cbind(a, b, c, d)
+M2
+
+```
+
+### (c).Constrict a matrix by a long vector
+```{r}
+X <- 1:20
+matrix(X, nrow = 4, ncol = 5)
+
+matrix(X, nrow = 5, ncol = 4)
+
+matrix(X, nrow = 4, ncol = 5, byrow = TRUE)
+
+matrix(X, nrow = 5, ncol = 4, byrow = TRUE)
+```
+
+### (d).Features for a matrix
+```{r}
+dim(M1) #Show the diamension of matrix
+
+colnames(M1); 
+rownames(M1);
+
+colnames(M1) <- c("V1", "V2", "V3", "V4", "V5") #Assign column names
+```
+
+### (e).Extract elements from a matrix
+```{r}
+#Use “[ ]” to extract elements from a matrix, 
+
+M1[2, 4];
+#M1[5, 5]; #Out of bond
+
+M1[c(2, 4), 3]; 
+
+M1[c(2, 4), c(3, 5)];
+M1
+```
+
+### (f).Extract a row or a column from a matrix
+```{r}
+M1[, 4]; 
+#M1[5, ]; #out of bond
+
+M1[c(2, 4), ];
+M1[, c(3, 5)]
+```
+
+### (i).Extract elements from a matrix
+```{r}
+M2
+
+M2[5]
+M2[13]
+```
